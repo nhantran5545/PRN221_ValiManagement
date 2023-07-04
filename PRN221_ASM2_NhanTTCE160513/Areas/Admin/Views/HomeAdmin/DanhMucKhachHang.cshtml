@@ -1,0 +1,80 @@
+﻿@model IEnumerable<PRN221_ASM2.Models.TKhachHang>
+@using PRN221_ASM2.Models
+@using X.PagedList.Mvc.Core;
+
+@{
+    ViewData["Title"] = "DanhMucKhachHang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h1>Danh Mục Khách Hàng</h1>
+
+<form method="get" class="pt-3">
+    <div class="form-group">
+        <input type="text" class="form-control" name="searchString" placeholder="Tìm kiếm Khách Hàng" value="@ViewBag.SearchString">
+    </div>
+    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+</form>
+
+<p>
+    <a asp-action="AddCustomer">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr class="table-warning">
+            <th>
+                Tên Khách Hàng
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Ngày Sinh
+            </th>
+            <th>
+                Số Điện Thoại
+            </th>
+            <th>
+                Địa Chỉ
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            string @cls = "table-success";
+        }
+        @foreach (var item in Model)
+        {
+            i = i + 1;
+            cls = "table-success";
+            if (i % 2 == 0)
+            {
+                cls = "table-primary";
+            }
+            <tr class="@cls">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenKhachHang)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgaySinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoDienThoai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaChi)
+                </td>
+                <td>
+                    <a asp-action="EditCustomer" asp-route-username="@item.Username">Edit</a> |
+                    <a asp-action="DeleteCustomer" asp-route-username="@item.Username">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
